@@ -1,0 +1,17 @@
+# Python: байт-код и кэш
+__pycache__/
+*.py[cod]
+
+# Виртуальное окружение
+venv/
+.venv/
+env/
+
+# Настройки IDE
+.idea/
+.vscode/
+
+# Результаты тестов
+.pytest_cache/
+allure-results/
+allure-report/
