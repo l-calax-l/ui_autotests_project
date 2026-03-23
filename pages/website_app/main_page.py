@@ -5,6 +5,7 @@ from config.links import Links
 
 
 class MainPage(BasePage):
+    """Page Object для главной страницы сайта."""
 
     PAGE_PATH = Links.BASE_PAGE
 
@@ -49,6 +50,6 @@ class MainPage(BasePage):
         "//ul[@class='elementor-icon-list-items']//a[contains(@href, 'mailto:')]",
     )
 
-    def get_active_course_title(self):
+    def get_active_course_title(self) -> str:
         with allure.step("Получить текст активного курса"):
             return self.get_text(self.TXT_ACTIVE_COURSE)

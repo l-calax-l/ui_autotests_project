@@ -9,6 +9,7 @@ from utils.wait import wait_to_change
 @pytest.mark.mainpage
 @allure.epic("Главная страница (Home Page)")
 class TestHomePage(BaseTest):
+    """Тестовый класс для проверки главной страницы сайта."""
 
     @pytest.mark.smoke
     @allure.feature("Отображение контента")

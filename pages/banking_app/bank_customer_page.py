@@ -1,4 +1,7 @@
+from typing import Any, Optional
+
 import allure
+from selenium.webdriver.remote.webelement import WebElement
 
 from base.base_page import BasePage
 from config.links import Links
@@ -6,6 +9,7 @@ from utils.wait import wait_to_change
 
 
 class BankCustomerPage(BasePage):
+    """Page Object для страницы клиента банка."""
 
     PAGE_PATH = Links.BANK_CUSTOMER_PAGE
 
@@ -37,11 +41,11 @@ class BankCustomerPage(BasePage):
     BTN_BACK_TO_ACCOUNT = ("css selector", "button[ng-click='back()']")
 
     # --- Авторизация ---
-    def select_your_name(self, customer_dict):
+    def select_your_name(self, customer_dict: dict[str, str]) -> None:
         name = f"{customer_dict['first_name']} {customer_dict['last_name']}"
         self.select_by_text(self.SELECT_USER, text=name)
 
-    def is_current_user(self, customer_dict):
+    def is_current_user(self, customer_dict: dict[str, str]) -> bool:
         full_name = f"{customer_dict['first_name']} {customer_dict['last_name']}"
 
         with allure.step(f"Проверить, что текущий пользователь: {full_name}"):
@@ -56,26 +60,26 @@ class BankCustomerPage(BasePage):
                 allure.attach(actual_text, name="Фактическое приветствие")
                 return False
 
-    def login_as_customer(self, data):
+    def login_as_customer(self, data: dict[str, str]) -> None:
         with allure.step(f"Вход в кабинет клиента: {data['first_name']}"):
             self.open()
 
             self.select_your_name(data)
             self.click(self.BTN_SUBMIT, "кнопка Login")
 
-    def get_balance(self):
+    def get_balance(self) -> int:
         text = self.find_element(self.LBL_BALANCE_VALUE).text
         return int(text)
 
-    def get_message(self):
+    def get_message(self) -> str:
         return self.find_element(self.LBL_STATUS_MSG).text
 
-    def is_message_hidden(self):
+    def is_message_hidden(self) -> bool:
         element = self.driver.find_element(*self.LBL_STATUS_MSG)
         return element.get_attribute("ng-hide") == "true" or not element.is_displayed()
 
     # --- Сценарии ---
-    def make_deposit(self, amount):
+    def make_deposit(self, amount: int) -> None:
         self.click(self.TAB_DEPOSIT, "Deposit")
 
         with allure.step(f"Ввод суммы {amount} и нажатие подтверждения"):
@@ -83,7 +87,7 @@ class BankCustomerPage(BasePage):
             self.send_keys(self.FLD_AMOUNT, str(amount))
             self.click(self.BTN_SUBMIT, "отправить")
 
-    def make_withdrawal(self, amount):
+    def make_withdrawal(self, amount: int) -> None:
         self.click(self.TAB_WITHDRAW, "Withdraw")
 
         with allure.step(f"Ввод суммы {amount} и нажатие подтверждения"):
@@ -91,7 +95,7 @@ class BankCustomerPage(BasePage):
             self.send_keys(self.FLD_AMOUNT, str(amount))
             self.click(self.BTN_SUBMIT, "отправить")
 
-    def get_all_transactions_data(self):
+    def get_all_transactions_data(self) -> list[dict[str, Any]]:
         with allure.step("Сбор всех транзакций из таблицы"):
             rows = self.driver.find_elements(*self.STR_TABLE_ROWS)
             transactions = []
@@ -101,7 +105,7 @@ class BankCustomerPage(BasePage):
                 transactions.append({"amount": int(cols[1].text), "type": cols[2].text})
             return transactions
 
-    def get_calculated_balance_from_table(self):
+    def get_calculated_balance_from_table(self) -> int:
         data = self.get_all_transactions_data()
         actual_balance = 0
 
@@ -114,7 +118,9 @@ class BankCustomerPage(BasePage):
         return actual_balance
 
     # --- Wait's ---
-    def wait_for_transactions_smart(self, expected_count=1):
+    def wait_for_transactions_smart(
+        self, expected_count: int = 1
+    ) -> Optional[list[WebElement]]:
         def get_rows():
             rows = self.driver.find_elements(*self.STR_TABLE_ROWS)
             return rows if len(rows) >= expected_count else None
@@ -127,7 +133,7 @@ class BankCustomerPage(BasePage):
                 get_rows, error_message="Данные не появились после refresh"
             )
 
-    def wait_for_balance(self, expected_value: int):
+    def wait_for_balance(self, expected_value: int) -> bool:
         with allure.step(f"Ожидание обновления баланса до {expected_value}"):
             return self.wait.until(
                 lambda d: self.get_balance() == expected_value,

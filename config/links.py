@@ -2,12 +2,25 @@ from config.pydantic_config import settings
 
 
 class Links:
-    BASE_PAGE = settings.base_url
-    REG_PAGE = settings.get_full_url("/angularjs-protractor/registeration/#/login")
-    BANK_FORM_PAGE = settings.get_full_url(
+    """Класс для хранения URL-адресов тестируемых приложений."""
+
+    BASE_PAGE: str = settings.base_url
+    """Главная страница приложения."""
+
+    REG_PAGE: str = settings.get_full_url("/angularjs-protractor/registeration/#/login")
+    """Страница регистрации/логина."""
+
+    BANK_FORM_PAGE: str = settings.get_full_url(
         "/angularjs-protractor/banking/registrationform.html"
     )
-    BANK_MANAGER_PAGE = settings.get_full_url("/angularjs-protractor/banking/#/manager")
-    BANK_CUSTOMER_PAGE = settings.get_full_url(
-        "https://www.way2automation.com/angularjs-protractor/banking/#/customer"
+    """Страница формы регистрации в банковском приложении."""
+
+    BANK_MANAGER_PAGE: str = settings.get_full_url(
+        "/angularjs-protractor/banking/#/manager"
     )
+    """Страница менеджера банка."""
+
+    BANK_CUSTOMER_PAGE: str = settings.get_full_url(
+        "/angularjs-protractor/banking/#/customer"
+    )
+    """Страница клиента банка."""

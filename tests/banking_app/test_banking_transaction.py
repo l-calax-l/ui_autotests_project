@@ -11,6 +11,7 @@ from base.base_test import BaseTest
 @allure.epic("Банковское приложение (XYZ Bank)")
 @allure.feature("Операции клиента (Customer Transactions)")
 class TestTransaction(BaseTest):
+    """Тестовый класс для проверки транзакций/операций клиента."""
 
     @pytest.mark.smoke
     @allure.story("Пополнение счета (Deposit)")

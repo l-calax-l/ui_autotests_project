@@ -1,3 +1,5 @@
+from typing import Optional
+
 import allure
 from selenium.webdriver.support import expected_conditions as EC
 
@@ -6,6 +8,8 @@ from config.links import Links
 
 
 class BankManagerPage(BasePage):
+    """Page Object для страницы менеджера банка."""
+
     PAGE_PATH = Links.BANK_MANAGER_PAGE
 
     # --- Секция добавления клиента (Add Customer) ---
@@ -26,48 +30,48 @@ class BankManagerPage(BasePage):
     INPUT_SEARCH = ("css selector", "input[ng-model='searchCustomer']")
     STR_TABLE_ROWS = ("css selector", "table tbody tr")
 
-    def DELETE_BUTTON_BY_NAME(self, name):
+    def DELETE_BUTTON_BY_NAME(self, name: str) -> tuple[str, str]:
         return (
             "xpath",
             f"//td[contains(text(), '{name}')]/following-sibling::td/button[text()='Delete']",
         )
 
     # --- Методы для Add Customer ---
-    def enter_data_and_send(self, data):
+    def enter_data_and_send(self, data: dict[str, str]) -> None:
         with allure.step(f"Ввести данные клиента: {data['first_name']}"):
             self.send_keys(self.FLD_FIRST_NAME, data["first_name"], "имя")
             self.send_keys(self.FLD_LAST_NAME, data["last_name"], "фамилия")
             self.send_keys(self.FLD_POST_CODE, data["post_code"], "индекс")
             self.click(self.BTN_SUBMIT, "кнопка подтверждения")
 
-    def click_add_customer(self):
+    def click_add_customer(self) -> None:
         self.click(self.TAB_ADD_CUSTOMER, "вкладка Add Customer")
 
     # --- Методы для Open Account
-    def click_open_account(self):
+    def click_open_account(self) -> None:
         with allure.step("Кликнуть на вкладку 'Open Account'"):
             self.wait.until(EC.element_to_be_clickable(self.TAB_OPEN_ACCOUNT)).click()
 
-    def select_customer(self, customer_dict):
+    def select_customer(self, customer_dict: dict[str, str]) -> None:
         full_name = f"{customer_dict['first_name']} {customer_dict['last_name']}"
         with allure.step(f"Выбрать клиента: {full_name}"):
             self.click(self.SEL_CUSTOMER, "список клиентов")
             self.select_by_text(self.SEL_CUSTOMER, full_name, "Customer")
 
-    def select_currency(self, currency_value):
+    def select_currency(self, currency_value: str) -> None:
         with allure.step(f"Выбрать валюту: {currency_value}"):
             self.click(self.SEL_CURRENCY, "список валют")
             self.select_by_text(self.SEL_CURRENCY, currency_value, "Currency")
 
     # --- Общие методы ---
-    def grab_alert(self):
+    def grab_alert(self) -> str:
         with allure.step("Перехватить alert и подтвердить"):
             alert = self.wait.until(EC.alert_is_present())
             message = alert.text
             alert.accept()
             return message
 
-    def setup_account(self, data):
+    def setup_account(self, data: dict[str, str]) -> None:
         self.click_open_account()
         self.select_customer(data)
         self.select_currency("Dollar")
@@ -75,12 +79,12 @@ class BankManagerPage(BasePage):
         self.grab_alert()
 
     # --- Удаление ---
-    def search_customer(self, text=""):
+    def search_customer(self, text: str = "") -> None:
         with allure.step(f"Поиск клиента по тексту: {text}"):
             self.find_element(self.INPUT_SEARCH).clear()
             self.find_element(self.INPUT_SEARCH).send_keys(text)
 
-    def is_customer_in_table(self, name, timeout=None):
+    def is_customer_in_table(self, name: str, timeout: Optional[int] = None) -> bool:
         with allure.step(f"Проверка наличия клиента '{name}' в таблице"):
             try:
                 rows = self.find_elements(self.STR_TABLE_ROWS, timeout=timeout)
@@ -91,7 +95,7 @@ class BankManagerPage(BasePage):
                 return False
             return False
 
-    def click_delete_customer(self, name):
+    def click_delete_customer(self, name: str) -> None:
         with allure.step(f"Нажать кнопку Delete для клиента: {name}"):
             locator = self.DELETE_BUTTON_BY_NAME(name)
             self.click(locator, f"кнопка Delete для {name}")

@@ -1,3 +1,5 @@
+from typing import Optional
+
 import allure
 from selenium.webdriver.support import expected_conditions as EC
 
@@ -6,6 +8,7 @@ from config.links import Links
 
 
 class RegPage(BasePage):
+    """Page Object для страницы регистрации/логина."""
 
     PAGE_PATH = Links.REG_PAGE
 
@@ -24,7 +27,7 @@ class RegPage(BasePage):
     LBL_SUCCESS_MSG = ("xpath", "//p[1]")
     LBL_ERROR_MSG = ("css selector", ".alert-danger")
 
-    def enter_reg_data(self, data):
+    def enter_reg_data(self, data: dict[str, str]) -> None:
         with allure.step(f"Заполнить данные username и password"):
             self.send_keys(self.FLD_USERNAME, data["username"], "username")
             self.send_keys(self.FLD_PASSWORD, data["password"], "password")
@@ -32,6 +35,8 @@ class RegPage(BasePage):
                 self.LBL_USER_DESCRIPTION, data["username"], "username* description"
             )
 
-    def wait_until_invisible(self, locator, locator_name=None):
+    def wait_until_invisible(
+        self, locator: tuple[str, str], locator_name: Optional[str] = None
+    ) -> None:
         with allure.step(f"Ждем пока элемент '{locator_name or locator}' не исчезнет"):
             self.wait.until(EC.invisibility_of_element_located(locator))

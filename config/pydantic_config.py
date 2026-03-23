@@ -5,6 +5,8 @@ from pydantic_settings import BaseSettings, SettingsConfigDict
 
 
 class Config(BaseSettings):
+    """Конфигурация приложения для тестирования."""
+
     base_url: str = Field(
         default="https://www.way2automation.com/",
         description="The base url for this application",

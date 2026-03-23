@@ -1,3 +1,5 @@
+from typing import Optional
+
 import allure
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.select import Select
@@ -7,6 +9,7 @@ from config.links import Links
 
 
 class BankFormPage(BasePage):
+    """Page Object для формы регистрации банковского приложения"""
 
     PAGE_PATH = Links.BANK_FORM_PAGE
 
@@ -27,14 +30,14 @@ class BankFormPage(BasePage):
     BTN_SUBMIT = ("css selector", "button[type='submit']")
     LBL_SUCCESS_MSG = ("id", "successMessage")
 
-    def get_longest_hobby(self):
+    def get_longest_hobby(self) -> str:
         with allure.step("Программное вычисление самого длинного хобби"):
             hobbies = self.find_elements(self.CHK_HOBBIES)
             return max(
                 (hobby.text.strip() for hobby in hobbies if hobby.text.strip()), key=len
             )
 
-    def select_hobby(self, target_hobby):
+    def select_hobby(self, target_hobby: str) -> None:
         hobbies = self.find_elements(self.CHK_HOBBIES)
         for hobby in hobbies:
             if target_hobby in hobby.text.strip():
@@ -42,7 +45,7 @@ class BankFormPage(BasePage):
                 return
         raise AssertionError(f"Хобби '{target_hobby}' не найдено в списке!")
 
-    def select_gender(self, target_gender):
+    def select_gender(self, target_gender: str) -> None:
         with allure.step(f"Выбрать пол из списка: {target_gender}"):
             select_element = self.find_element(
                 self.SEL_GENDER, "выпадающий список Gender"
@@ -52,7 +55,13 @@ class BankFormPage(BasePage):
 
             select.select_by_visible_text(target_gender)
 
-    def fill_registration_form(self, user_data, hobby=None, about=None, gender=None):
+    def fill_registration_form(
+        self,
+        user_data: dict[str, str],
+        hobby: Optional[str] = None,
+        about: Optional[str] = None,
+        gender: Optional[str] = None,
+    ) -> None:
         with allure.step(f"Заполнить форму регистрации полностью"):
             self.send_keys(
                 self.FLD_FIRST_NAME, user_data["first_name"], "поле firstname"
@@ -72,6 +81,6 @@ class BankFormPage(BasePage):
                     "поле About Yourself",
                 )
 
-    def click_register(self):
+    def click_register(self) -> None:
         with allure.step("Кликнуть на кнопку 'Register'"):
             self.wait.until(EC.element_to_be_clickable(self.BTN_SUBMIT)).click()

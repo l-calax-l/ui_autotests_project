@@ -9,6 +9,7 @@ from data.data import BankLoginData, ManagerPageData
 @pytest.mark.manager
 @allure.epic("Банковское приложение (XYZ Bank)")
 class TestBankingPage(BaseTest):
+    """Тестовый класс для проверки функционала банковского приложения."""
 
     @pytest.mark.regression
     @allure.feature("Регистрация клиентов")

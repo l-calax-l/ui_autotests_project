@@ -10,6 +10,7 @@ from data.data import RegPageData
 @allure.epic("Система управления доступом")  # Глобальная группа
 @allure.feature("Регистрация и Авторизация")
 class TestRegPage(BaseTest):
+    """Тестовый класс для проверки функционала регистрации и авторизации."""
 
     @pytest.mark.regression
     @allure.story("Визуальная валидация формы")
@@ -57,7 +58,9 @@ class TestRegPage(BaseTest):
                 expected_title in current_title
             ), f"Ожидалось сообщение {expected_title},получен {current_title}"
 
-    @pytest.mark.parametrize('data',RegPageData.INVALID_LIST, ids=lambda d: d["username"])
+    @pytest.mark.parametrize(
+        "data", RegPageData.INVALID_LIST, ids=lambda d: d["username"]
+    )
     @pytest.mark.regression
     @pytest.mark.excel_data
     @allure.story("Негативные сценарии")
