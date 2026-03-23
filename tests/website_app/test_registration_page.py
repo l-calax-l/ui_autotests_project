@@ -57,15 +57,17 @@ class TestRegPage(BaseTest):
                 expected_title in current_title
             ), f"Ожидалось сообщение {expected_title},получен {current_title}"
 
+    @pytest.mark.parametrize('data',RegPageData.INVALID_LIST, ids=lambda d: d["username"])
     @pytest.mark.regression
+    @pytest.mark.excel_data
     @allure.story("Негативные сценарии")
     @allure.title("4.3 Попытка входа с невалидными данными")
     @allure.severity(allure.severity_level.NORMAL)
-    def test_4_3_login_failure_with_invalid_data(self):
+    def test_4_3_login_failure_with_invalid_data(self, data):
         self.reg_page.open()
 
         with allure.step("Ввести невалидные данные"):
-            self.reg_page.enter_reg_data(RegPageData.INVALID)
+            self.reg_page.enter_reg_data(data)
 
         with allure.step("Нажать Login и дождаться загрузки"):
             self.reg_page.click(self.reg_page.BTN_LOGIN, "кнопка Login")

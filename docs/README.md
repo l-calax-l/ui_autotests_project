@@ -47,6 +47,11 @@ DEFAULT_TIME_OUT=15
 POLL_FREQUENCY=1
 HEADLESS=true
 ```
+Настройка тестовых данных
+
+1. Скопируйте `test_data_example.xlsx` в `test_data.xlsx`
+2. Заполните файл тестовыми данными
+3. Файл `test_data.xlsx` добавлен в `.gitignore` и не будет пушиться в репозиторий
 
 ### 3. Запуск тестов
 ```bash

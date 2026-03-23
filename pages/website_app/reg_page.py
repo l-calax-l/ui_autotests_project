@@ -9,14 +9,13 @@ class RegPage(BasePage):
 
     PAGE_PATH = Links.REG_PAGE
 
-    # --- Поля ввода (Input Fields) ---
+    # --- Поля ввода ---
     FLD_USERNAME = ("id", "username")
     FLD_PASSWORD = ("id", "password")
     LBL_USER_DESCRIPTION = ("css selector", "[ng-model='model[options.key]']")
 
     # --- Кнопки управления ---
     BTN_LOGIN = ("css selector", "button.btn-danger")
-    # Используем LNK_, так как это ссылка, ведущая на логаут
     LNK_LOGOUT = ("css selector", 'a[href="#/login"]')
 
     # --- Состояния и Фидбек ---

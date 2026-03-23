@@ -1,36 +1,42 @@
 from faker import Faker
+from data.excel_reader import ExcelDataReader
 
 fake = Faker()
+reader = ExcelDataReader()
 
 
 class RegPageData:
-    VALID = {"username": "angular", "password": "password"}
-    INVALID = {"username": "wrong_user", "password": "wrong_password"}
+    VALID_LIST = reader.get_reg_page_valid()
+    INVALID_LIST = reader.get_reg_page_invalid()
+
+    VALID = VALID_LIST[0] if VALID_LIST else {"username": "angular", "password": "password"}
+    INVALID = INVALID_LIST[0] if INVALID_LIST else {"username": "wrong_user", "password": "wrong_password"}
 
 
 class BankLoginData:
-    first_name = fake.first_name()
-    last_name = fake.last_name()
-    email = fake.email()
-    password = fake.password()
+    VALID_LIST = reader.get_bank_login_valid()
+    INVALID_LIST = reader.get_bank_login_invalid()
 
-    VALID = {
-        "first_name": first_name,
-        "last_name": last_name,
-        "email": email,
-        "password": password,
+    VALID = VALID_LIST[0] if VALID_LIST else {
+        "first_name": fake.first_name(),
+        "last_name": fake.last_name(),
+        "email": fake.email(),
+        "password": fake.password(),
     }
-
-    INVALID = {"firstname": " ", "lastname": " ", "email": " ", "password": " "}
+    INVALID = INVALID_LIST[0] if INVALID_LIST else {
+        "first_name": " ",
+        "last_name": " ",
+        "email": " ",
+        "password": " ",
+    }
 
 
 class ManagerPageData:
-    first_name = fake.first_name()
-    last_name = fake.last_name()
-    post_code = fake.postcode()
+    VALID_LIST = reader.get_manager_valid()
+    INVALID_LIST = reader.get_manager_invalid()
 
-    VALID = {
-        "first_name": first_name,
-        "last_name": last_name,
-        "post_code": post_code,
+    VALID = VALID_LIST[0] if VALID_LIST else {
+        "first_name": fake.first_name(),
+        "last_name": fake.last_name(),
+        "post_code": fake.postcode(),
     }

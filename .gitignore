@@ -8,3 +8,5 @@ allure-report/
 .env
 .idea/
 .vscode/
+test_data.xlsx
+test_data.xls
