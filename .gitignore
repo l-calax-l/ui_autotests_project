@@ -10,3 +10,4 @@ allure-report/
 .vscode/
 test_data.xlsx
 test_data.xls
+cookies.pkl
