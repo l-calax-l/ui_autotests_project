@@ -1,11 +1,12 @@
-import logging
 import os
 import pickle
 
 import allure
 from selenium.webdriver.remote.webdriver import WebDriver
 
-logger = logging.getLogger(__name__)
+from utils.logger import get_logger
+
+logger = get_logger(__name__)
 
 
 class CookieHelper:
@@ -49,6 +50,7 @@ class CookieHelper:
         """Сохраняет текущие cookies в файл."""
         try:
             cookies = self.driver.get_cookies()
+            logger.debug(f"Полученные Cookies строки (save): {cookies}")
             with open(self.cookies_file, "wb") as f:
                 pickle.dump(cookies, f)
             logger.info(f"Сохранено {len(cookies)} cookies в {self.cookies_file}")
@@ -76,6 +78,7 @@ class CookieHelper:
 
             self.driver.refresh()
             loaded_cookies = len(self.driver.get_cookies())
+            logger.debug(f"Полученные Cookies строки (load): {cookies}")
             logger.info(f"Загружено {loaded_cookies} cookies")
             allure.attach(
                 f"Загружено {loaded_cookies} cookies",
