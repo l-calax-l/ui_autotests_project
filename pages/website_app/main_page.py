@@ -7,7 +7,7 @@ from config.links import Links
 class MainPage(BasePage):
     """Page Object для главной страницы сайта."""
 
-    PAGE_PATH = Links.BASE_PAGE
+    PAGE_PATH = Links.BASE_PAGE_1
 
     # --- Хедер ---
     HDR_MAIN = ("css selector", "header#masthead")
