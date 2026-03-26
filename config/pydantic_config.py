@@ -11,7 +11,11 @@ class Config(BaseSettings):
     default_time_out: float = 15
     poll_frequency: float = 1
     headless: bool = True
-    selenium_remote_url: str | None = None
+    use_grid: bool = False
+    selenium_remote_url: str = Field(
+        default="http://localhost:4444/wd/hub",
+        description="URL хаба Selenium Grid"
+    )
 
     # --- Way2automation ---
     base_url_1: str = Field(

@@ -33,10 +33,16 @@ def driver(request):
         logger.info("Режим headless включен")
         options.add_argument("--headless")
 
-    driver = webdriver.Chrome(options=options)
-    logger.info("WebDriver успешно запущен")
+    if settings.use_grid:
+        logger.info(f"Запуск через Selenium Grid: {settings.selenium_remote_url}")
+        driver = webdriver.Remote(command_executor=settings.selenium_remote_url, options=options)
+    else:
+        logger.info("Запуск локального WebDriver")
+        driver = webdriver.Chrome(options=options)
 
     request.cls.driver = driver
+
+    logger.info("WebDriver успешно запущен")
 
     yield driver
 
