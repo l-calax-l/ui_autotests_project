@@ -3,6 +3,9 @@ import allure
 from base.base_page import BasePage
 from config.links import Links
 from config.pydantic_config import settings
+from utils.logger import get_logger
+
+logger = get_logger(__name__)
 
 
 class SqlPage(BasePage):
@@ -30,10 +33,21 @@ class SqlPage(BasePage):
         "//b[contains(text(),'Краткая информация о базе данных')]",
     )
 
+    FLD_CODE_EXERCISE = ("css selector", "textarea[id='txtsql']")
+
     def perform_login(
         self, login: str = settings.login, password: str = settings.password
     ) -> None:
         with allure.step(f"Войти в аккаунт: {login}"):
+            logger.info(f"Логин в аккаунт, пользователь: {login}")
             self.send_keys(self.FLD_LOGIN, login, "Логин")
             self.send_keys(self.FLD_PASS, password, "Пароль")
             self.click(self.BTN_LOGIN)
+            logger.info(
+                f"Кнопка логина нажата, запрос на авторизацию отправлен для: {login}"
+            )
+
+    def move_to_exercise(self) -> None:
+        with allure.step("Перейти на вкладку с SQL задачами"):
+            self.click(self.TAB_EXERCISE, "Упражнения по SQL")
+            self.click(self.LNK_SELECT, "SELECT (обучающий этап)")

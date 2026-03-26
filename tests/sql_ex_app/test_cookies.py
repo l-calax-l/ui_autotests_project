@@ -5,11 +5,12 @@ from base.base_test import BaseTest
 from config.pydantic_config import settings
 
 
+@allure.feature("Авторизация и сессии")
+@allure.story("Работа с cookies")
 class TestWithCookies(BaseTest):
+    """Тестовый класс для проверки функционала сохранения/загрузки cookies."""
 
     @pytest.mark.smoke
-    @allure.feature("Авторизация и сессии")
-    @allure.story("Работа с cookies")
     @allure.title("Проверка наличия cookies и авторизация")
     @allure.severity(allure.severity_level.BLOCKER)
     def test_cookies(self):
@@ -32,8 +33,6 @@ class TestWithCookies(BaseTest):
         ), f"Ожидалось '{settings.account_name}', получено '{current_name}'"
 
     @pytest.mark.smoke
-    @allure.feature("Авторизация и сессии")
-    @allure.story("Работа с cookies")
     @allure.title("Проверка авторизации через cookies и открытие упражнений по SQL")
     @allure.severity(allure.severity_level.BLOCKER)
     def test_auth_with_cookies(self):
