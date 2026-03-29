@@ -16,6 +16,7 @@ class Config(BaseSettings):
         default="http://localhost:4444/wd/hub",
         description="URL хаба Selenium Grid"
     )
+    browser: str = "chrome"
 
     # --- Way2automation ---
     base_url_1: str = Field(
