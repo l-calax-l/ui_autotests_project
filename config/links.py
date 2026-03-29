@@ -28,3 +28,7 @@ class Links:
     """Страница клиента банка."""
 
     BASE_PAGE_2 = settings.base_url_2
+
+    DROP_PAGE: str = settings.get_full_url(
+        BASE_PAGE_1, "/way2auto_jquery/droppable.php"
+    )
