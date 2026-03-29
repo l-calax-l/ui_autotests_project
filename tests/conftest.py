@@ -9,39 +9,32 @@ from pages.banking_app.bank_manager_page import BankManagerPage
 from pages.sql_ex_app.sql_page import SqlPage
 from pages.website_app.reg_page import RegPage
 from utils.cookies_helpers import CookieHelper
+from utils.driver_factory import DriverFactory
 from utils.logger import get_logger
 
 logger = get_logger(__name__)
 
 
+def pytest_addoption(parser):
+    parser.addoption("--browser", action="store", default="chrome", help="Браузер для запуска тестов")
+
+
 @pytest.fixture(scope="function", autouse=True)
 def driver(request):
-    logger.info("Инициализация Chrome WebDriver")
+    browser_name = request.config.getoption("--browser")
+    if not browser_name:
+        browser_name = getattr(settings, "browser", "chrome")
 
-    options = webdriver.ChromeOptions()
-    options.add_argument("--no-sandbox")
-    options.add_argument("--disable-dev-shm-usage")
-    options.add_argument("--disable-gpu")
-    options.add_argument("--window-size=1920,1080")
-    options.add_argument("--incognito")
-    options.add_argument(
-        "user-agent=Mozilla/5.0 (Windows NT 10.0; Win64; x64) "
-        "AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36"
+    logger.info(f"Инициализация WebDriver для браузера: {browser_name.upper()}")
+
+    driver = DriverFactory.create_driver(
+        browser_name=browser_name,
+        is_headless=settings.headless,
+        is_grid=settings.use_grid,
+        grid_url=settings.selenium_remote_url
     )
 
-    if settings.headless:
-        logger.info("Режим headless включен")
-        options.add_argument("--headless")
-
-    if settings.use_grid:
-        logger.info(f"Запуск через Selenium Grid: {settings.selenium_remote_url}")
-        driver = webdriver.Remote(command_executor=settings.selenium_remote_url, options=options)
-    else:
-        logger.info("Запуск локального WebDriver")
-        driver = webdriver.Chrome(options=options)
-
     request.cls.driver = driver
-
     logger.info("WebDriver успешно запущен")
 
     yield driver
