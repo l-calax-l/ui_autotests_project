@@ -8,7 +8,12 @@ from selenium.webdriver.ie.options import Options as IEOptions
 class DriverFactory:
 
     @staticmethod
-    def create_driver(browser_name: str, is_headless: bool = False, is_grid: bool = False, grid_url: str = None):
+    def create_driver(
+        browser_name: str,
+        is_headless: bool = False,
+        is_grid: bool = False,
+        grid_url: str = None,
+    ):
         browser_name = browser_name.lower().strip()
 
         if browser_name == "chrome":

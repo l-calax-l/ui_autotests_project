@@ -13,8 +13,7 @@ class Config(BaseSettings):
     headless: bool = True
     use_grid: bool = False
     selenium_remote_url: str = Field(
-        default="http://localhost:4444/wd/hub",
-        description="URL хаба Selenium Grid"
+        default="http://localhost:4444/wd/hub", description="URL хаба Selenium Grid"
     )
     browser: str = "chrome"
 

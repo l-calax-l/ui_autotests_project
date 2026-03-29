@@ -16,7 +16,9 @@ logger = get_logger(__name__)
 
 
 def pytest_addoption(parser):
-    parser.addoption("--browser", action="store", default="chrome", help="Браузер для запуска тестов")
+    parser.addoption(
+        "--browser", action="store", default="chrome", help="Браузер для запуска тестов"
+    )
 
 
 @pytest.fixture(scope="function", autouse=True)
@@ -31,7 +33,7 @@ def driver(request):
         browser_name=browser_name,
         is_headless=settings.headless,
         is_grid=settings.use_grid,
-        grid_url=settings.selenium_remote_url
+        grid_url=settings.selenium_remote_url,
     )
 
     request.cls.driver = driver
