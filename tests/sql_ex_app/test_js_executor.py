@@ -1,5 +1,3 @@
-import time
-
 from base.base_test import BaseTest
 import allure
 import pytest
