@@ -15,8 +15,9 @@ class TestJsExecutor(BaseTest):
     @allure.severity(allure.severity_level.MINOR)
     def test_js_executor(self, auth_on_sql_ex):
         with allure.step("Проверка наличия вертикального скролла на странице"):
-            assert self.sql_page.has_vertical_scroll(), \
-                "Ожидалось, что на странице имеется вертикальный скролл"
+            assert (
+                self.sql_page.has_vertical_scroll()
+            ), "Ожидалось, что на странице имеется вертикальный скролл"
 
         self.sql_page.move_to_exercise()
 
@@ -30,6 +31,6 @@ class TestJsExecutor(BaseTest):
             self.sql_page.blur_element(text_input)
 
             active = self.sql_page.driver.switch_to.active_element
-            assert active != text_input, \
-                "Ожидалось, что фокус уйдёт с поля ввода SQL кода"
-
+            assert (
+                active != text_input
+            ), "Ожидалось, что фокус уйдёт с поля ввода SQL кода"
