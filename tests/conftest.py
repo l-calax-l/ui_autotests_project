@@ -1,13 +1,12 @@
 import allure
 import pytest
-from selenium import webdriver
 
 from config.pydantic_config import settings
 from data.data import ManagerPageData, RegPageData
 from pages.banking_app.bank_customer_page import BankCustomerPage
 from pages.banking_app.bank_manager_page import BankManagerPage
 from pages.sql_ex_app.sql_page import SqlPage
-from pages.website_app.reg_page import RegPage
+from pages.website_app.main.reg_page import RegPage
 from utils.cookies_helpers import CookieHelper
 from utils.driver_factory import DriverFactory
 from utils.logger import get_logger
