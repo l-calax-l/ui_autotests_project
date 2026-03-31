@@ -185,19 +185,51 @@ class BasePage:
                 "document.documentElement.clientHeight;"
             )
 
-    def switch_to_frame(self, locator):
-        self.wait.until(EC.frame_to_be_available_and_switch_to_it(locator))
+    def switch_to_frame(
+        self, locator: tuple[str, str], locator_name: Optional[str] = None
+    ) -> None:
+        name = locator_name or str(locator)
+        with allure.step(f"Переключиться на фрейм '{name}'"):
+            logger.info(f"Переключение на iframe: {name} ({locator})")
+            self.wait.until(EC.frame_to_be_available_and_switch_to_it(locator))
 
-    def drag_and_drop(self, source_locator, target_locator):
-        source = self.find_element(source_locator)
-        target = self.find_element(target_locator)
-        ActionChains(self.driver).drag_and_drop(source, target).perform()
+    def drag_and_drop(
+        self, source_locator: tuple[str, str], target_locator: tuple[str, str]
+    ) -> None:
+        with allure.step(f"Перетащить элемент {source_locator} в {target_locator}"):
+            logger.info(
+                f"Выполнение Drag-and-Drop: {source_locator} -> {target_locator}"
+            )
+            source = self.find_element(source_locator)
+            target = self.find_element(target_locator)
+            self.action.drag_and_drop(source, target).perform()
 
     def switch_to_last_window(self) -> None:
         with allure.step("Переключить фокус на последнюю открытую вкладку"):
             handles = self.driver.window_handles
+            logger.debug(f"Доступные дескрипторы окон: {handles}")
             self.driver.switch_to.window(handles[-1])
+            logger.info(f"Фокус переключен на окно: {self.driver.current_url}")
 
     def get_windows_count(self) -> int:
-        with allure.step("Вернуть количество вкладок/окон"):
-            return len(self.driver.window_handles)
+        with allure.step("Получить количество открытых вкладок/окон"):
+            count = len(self.driver.window_handles)
+            logger.debug(f"Текущее количество открытых вкладок: {count}")
+            return count
+
+    def alert_send_keys(self, text: str) -> None:
+        with allure.step(f"Ввести текст '{text}' в Alert"):
+            logger.info(f"Ввод текста в Alert: '{text}'")
+            alert = self.driver.switch_to.alert
+            alert.send_keys(text)
+
+    def alert_accept(self) -> None:
+        with allure.step("Принять Alert (нажать ОК)"):
+            logger.info("Акцепт (Accept) системного алерта")
+            self.driver.switch_to.alert.accept()
+
+    def get_alert_text(self) -> str:
+        with allure.step("Получить текст сообщения из Alert"):
+            text = self.driver.switch_to.alert.text
+            logger.debug(f"Текст алерта: '{text}'")
+            return text

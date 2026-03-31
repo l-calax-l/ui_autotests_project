@@ -5,6 +5,7 @@ from pages.banking_app.bank_customer_page import BankCustomerPage
 from pages.banking_app.bank_form_page import BankFormPage
 from pages.banking_app.bank_manager_page import BankManagerPage
 from pages.sql_ex_app.sql_page import SqlPage
+from pages.website_app.interactions.alert_page import AlertPage
 from pages.website_app.interactions.drop_page import DroppablePage
 from pages.website_app.interactions.tabs_page import TabsPage
 from pages.website_app.main.main_page import MainPage
@@ -22,6 +23,7 @@ class BaseTest:
     cust_page: BankCustomerPage
     drop_page: DroppablePage
     tabs_page: TabsPage
+    alert_page: AlertPage
 
     sql_page: SqlPage
     cook_help: CookieHelper
@@ -37,6 +39,7 @@ class BaseTest:
         request.cls.cust_page = BankCustomerPage(driver)
         request.cls.drop_page = DroppablePage(driver)
         request.cls.tabs_page = TabsPage(driver)
+        request.cls.alert_page = AlertPage(driver)
 
         # --- SQL-EX ---
         request.cls.sql_page = SqlPage(driver)

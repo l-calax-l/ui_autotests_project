@@ -36,3 +36,7 @@ class Links:
     TABS_PAGE: str = settings.get_full_url(
         BASE_PAGE_1, "/way2auto_jquery/frames-and-windows.php"
     )
+
+    ALERT_PAGE: str = settings.get_full_url(
+        BASE_PAGE_1, "/way2auto_jquery/alert.php"
+    )
