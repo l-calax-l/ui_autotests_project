@@ -192,3 +192,12 @@ class BasePage:
         source = self.find_element(source_locator)
         target = self.find_element(target_locator)
         ActionChains(self.driver).drag_and_drop(source, target).perform()
+
+    def switch_to_last_window(self) -> None:
+        with allure.step("Переключить фокус на последнюю открытую вкладку"):
+            handles = self.driver.window_handles
+            self.driver.switch_to.window(handles[-1])
+
+    def get_windows_count(self) -> int:
+        with allure.step("Вернуть количество вкладок/окон"):
+            return len(self.driver.window_handles)
