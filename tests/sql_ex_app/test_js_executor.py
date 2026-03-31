@@ -1,8 +1,7 @@
-import time
-
-from base.base_test import BaseTest
 import allure
 import pytest
+
+from base.base_test import BaseTest
 
 
 @allure.feature("JavaScriptExecutor")

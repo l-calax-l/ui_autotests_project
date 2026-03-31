@@ -2,7 +2,6 @@ import allure
 import pytest
 
 from base.base_test import BaseTest
-from utils.wait import wait_to_change
 
 
 @pytest.mark.website
