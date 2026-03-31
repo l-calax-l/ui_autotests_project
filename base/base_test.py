@@ -5,10 +5,10 @@ from pages.banking_app.bank_customer_page import BankCustomerPage
 from pages.banking_app.bank_form_page import BankFormPage
 from pages.banking_app.bank_manager_page import BankManagerPage
 from pages.sql_ex_app.sql_page import SqlPage
-from pages.website_app.drop_page import DroppablePage
-from pages.website_app.main_page import MainPage
-from pages.website_app.reg_page import RegPage
-from pages.website_app.tabs_page import TabsPage
+from pages.website_app.main.drop_page import DroppablePage
+from pages.website_app.interactions.main_page import MainPage
+from pages.website_app.interactions.reg_page import RegPage
+from pages.website_app.main.tabs_page import TabsPage
 from utils.cookies_helpers import CookieHelper
 
 
