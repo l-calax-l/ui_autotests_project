@@ -10,8 +10,8 @@ from selenium.webdriver.support.select import Select
 from selenium.webdriver.support.ui import WebDriverWait
 
 from config.pydantic_config import settings
-from utils.wait import wait_to_change
 from utils.logger import get_logger
+from utils.wait import wait_to_change
 
 logger = get_logger(__name__)
 
@@ -184,3 +184,11 @@ class BasePage:
                 "return document.documentElement.scrollHeight > "
                 "document.documentElement.clientHeight;"
             )
+
+    def switch_to_frame(self, locator):
+        self.wait.until(EC.frame_to_be_available_and_switch_to_it(locator))
+
+    def drag_and_drop(self, source_locator, target_locator):
+        source = self.find_element(source_locator)
+        target = self.find_element(target_locator)
+        ActionChains(self.driver).drag_and_drop(source, target).perform()
