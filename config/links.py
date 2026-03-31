@@ -32,3 +32,7 @@ class Links:
     DROP_PAGE: str = settings.get_full_url(
         BASE_PAGE_1, "/way2auto_jquery/droppable.php"
     )
+
+    TABS_PAGE: str = settings.get_full_url(
+        BASE_PAGE_1, "/way2auto_jquery/frames-and-windows.php"
+    )
