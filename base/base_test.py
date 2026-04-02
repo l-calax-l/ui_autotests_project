@@ -4,6 +4,7 @@ from selenium.webdriver.remote.webdriver import WebDriver
 from pages.banking_app.bank_customer_page import BankCustomerPage
 from pages.banking_app.bank_form_page import BankFormPage
 from pages.banking_app.bank_manager_page import BankManagerPage
+from pages.basic_auth.auth_page import AuthPage
 from pages.sql_ex_app.sql_page import SqlPage
 from pages.website_app.interactions.alert_page import AlertPage
 from pages.website_app.interactions.drop_page import DroppablePage
@@ -24,6 +25,7 @@ class BaseTest:
     drop_page: DroppablePage
     tabs_page: TabsPage
     alert_page: AlertPage
+    auth_page: AuthPage
 
     sql_page: SqlPage
     cook_help: CookieHelper
@@ -40,6 +42,7 @@ class BaseTest:
         request.cls.drop_page = DroppablePage(driver)
         request.cls.tabs_page = TabsPage(driver)
         request.cls.alert_page = AlertPage(driver)
+        request.cls.auth_page = AuthPage(driver)
 
         # --- SQL-EX ---
         request.cls.sql_page = SqlPage(driver)
