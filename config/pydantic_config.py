@@ -31,6 +31,11 @@ class Config(BaseSettings):
     password: str = Field(description="Password")
     account_name: str = Field(description="Username")
 
+    auth_page_url: str = Field(
+        default="https://www.httpwatch.com/httpgallery/authentication/#showExample10",
+        description="Auth Page URL",
+    )
+
     model_config = SettingsConfigDict(
         env_file=".env", env_file_encoding="utf-8", case_sensitive=False, extra="ignore"
     )
