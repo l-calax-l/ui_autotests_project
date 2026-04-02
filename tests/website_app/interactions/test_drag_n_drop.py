@@ -7,8 +7,8 @@ from base.base_test import BaseTest
 @pytest.mark.website
 @pytest.mark.droppable
 @allure.epic("Взаимодействие с элементами")
-class TestHomePage(BaseTest):
-    """Тестовый класс для проверки главной страницы сайта."""
+class TestDropPage(BaseTest):
+    """Тестовый класс для проверки Drag n Drop."""
 
     @pytest.mark.smoke
     @allure.feature("Drag n Drop")
