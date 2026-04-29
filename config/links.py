@@ -37,6 +37,10 @@ class Links:
         BASE_PAGE_1, "/way2auto_jquery/frames-and-windows.php"
     )
 
-    ALERT_PAGE: str = settings.get_full_url(
-        BASE_PAGE_1, "/way2auto_jquery/alert.php"
+    ALERT_PAGE: str = settings.get_full_url(BASE_PAGE_1, "/way2auto_jquery/alert.php")
+
+    AUTH_PAGE: str = settings.get_full_url(settings.auth_page_url, "/#showExample10")
+
+    AUTH_SYSTEM_WINDOW: str = settings.get_full_url(
+        settings.auth_page_url, "/authenticatedimage/default.aspx"
     )
